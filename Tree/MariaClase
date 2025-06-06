@@ -1,0 +1,126 @@
+#include <iostream>
+using namespace std;
+
+struct nodeTree
+{
+    int value = 0;
+    nodeTree *left = NULL;
+    nodeTree *right = NULL;
+};
+
+
+nodeTree *createNode(int value)
+{
+    nodeTree *new_node = new nodeTree();
+    new_node->value = value;
+
+    return new_node;
+}
+
+void insertNode(nodeTree *&tree, int value)
+{
+    if (tree == NULL)
+    {
+        nodeTree *new_node = createNode(value);
+        tree = new_node;
+    }
+    else
+    {
+        int valueNode = tree->value;
+        if (value < valueNode)
+        {
+            insertNode(tree->left, value);
+        }
+        else
+        {
+            insertNode(tree->right, value);
+        }
+    }
+}
+
+bool search (nodeTree *tree, int value){
+    if (!tree) return false;
+    else
+        if (tree->value== value) return true;
+    else if (tree->value>value) return search (tree->left, value);
+    else return search (tree->right,value);
+}
+
+void preOrder (nodeTree *tree){
+    if (tree){
+        cout<<tree->value<<"\n";
+        preOrder(tree->left);
+        preOrder(tree->right);
+    }
+}
+void postOrder (nodeTree *tree){
+    if (tree){
+        postOrder(tree->left);
+        postOrder(tree->right);
+        cout<<tree->value<<"\n";
+    }
+}
+
+void inOrder (nodeTree *tree){
+    if (tree){
+        inOrder(tree->left);
+        cout<<tree->value<<"\n";
+        inOrder(tree->right);
+    }
+}
+
+//nodeTree *createNode(int);
+//void insertNode(nodeTree *&, int);
+//void showTree(nodeTree *&, int);
+
+int main(){
+    nodeTree *tree = NULL;
+    int value=0;
+    int resp;
+
+    do {
+        cout << "MENU\n\n";
+        cout << "1) Imprimir Arbol\n";
+        cout << "2) Insertar elemento\n";
+        cout << "3) Consultar si un elemento ya existe\n";
+        cout << "0) Salir\n\n";
+        cout << "\tMarque su opcion: ";
+        cin >> resp;
+        switch (resp) {
+            case 0: {
+                cout << "Finalizando programa";            
+            } break;
+
+            case 1: {
+                cout<<"El arbol en forma de Pre Orden";
+                preOrder(tree);
+                cout<<"El arbol en forma de Post Orden";
+                postOrder(tree);
+                cout<<"\n";
+                cout<<"El arbol en forma de In Orden";
+                inOrder(tree);
+            } break;
+
+            case 2: {
+                cout << "Digite un número = ";
+                cin >> value;
+                insertNode(tree, value);
+            } break;
+
+            case 3: {
+                int value;
+                cout << "\tIngrese el elemento a buscar: ";
+                cin >> value;
+                if (search(tree, value)) cout << "El valor indicado ya ha sido agregado a la lista" << endl; 
+                else cout << "El valor indicado no ha sido agregado a la lista" << endl;
+            } break;
+
+            default:
+                cout << "Opción no valida" << endl;
+            break;
+        }
+		
+    } while(resp);
+
+    return 0;
+}
