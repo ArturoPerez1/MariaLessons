@@ -17,6 +17,13 @@ nodeTree *createNode(int value)
     return new_node;
 }
 
+bool numeroPrimo (int value){
+    for (int i=2 ; i<value ; i++){
+        if (value % i ==0) return false;
+    }
+    return true;
+}
+
 void insertNode(nodeTree *&tree, int value) // toma como parametro un puntero y un valor 
 {
     if (!numeroPrimo(value)) return;
@@ -37,13 +44,6 @@ void insertNode(nodeTree *&tree, int value) // toma como parametro un puntero y 
             insertNode(tree->right, value); // dere si es mayor 
         }
     }
-}
-
-bool numeroPrimo (int value){
-    for (int i=2 ; i<value ; i++){
-        if (value % i ==0) return false;
-    }
-    return true;
 }
 
 
@@ -102,12 +102,12 @@ int main(){
             } break;
 
             case 1: {
-                cout<<"El arbol en forma de Pre Orden";
+                cout<<"El arbol en forma de Pre Orden\n";
                 preOrder(tree);
-                cout<<"El arbol en forma de Post Orden";
+                cout<<"El arbol en forma de Post Orden\n";
                 postOrder(tree);
                 cout<<"\n";
-                cout<<"El arbol en forma de In Orden";
+                cout<<"El arbol en forma de In Orden\n";
                 inOrder(tree);
             } break;
 
